@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bgLight"
+    tools:ignore="hardcodedText">
+
+    <TextView
+        android:id="@+id/tvChoose"
+        style="@style/h1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Choose"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/btnCamera"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="48dp"
+        android:contentDescription="btnCamera"
+        android:src="@drawable/ic_camera_filled"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvChoose" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Camera"
+        android:layout_marginBottom="48dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@id/btnCamera"
+        app:layout_constraintEnd_toEndOf="@id/btnCamera"
+        app:layout_constraintTop_toBottomOf="@id/btnCamera"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/h4"
+        android:textColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/btnGallery"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="48dp"
+        android:contentDescription="btnGallery"
+        android:src="@drawable/ic_gallery_filled"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvChoose" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gallery"
+        android:layout_marginBottom="48dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@id/btnGallery"
+        app:layout_constraintEnd_toEndOf="@id/btnGallery"
+        app:layout_constraintTop_toBottomOf="@id/btnGallery"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/h4"
+        android:textColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/btnDelete"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="48dp"
+        android:contentDescription="btnDelete"
+        android:src="@drawable/ic_dustbin_filled"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvChoose" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:layout_marginBottom="48dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@id/btnDelete"
+        app:layout_constraintEnd_toEndOf="@id/btnDelete"
+        app:layout_constraintTop_toBottomOf="@id/btnDelete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/h4"
+        android:textColor="@color/white" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.LetMeKnow" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@color/action_bar</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="colorAccent">@color/text</item>
+        <item name="android:navigationBarColor">@color/bgLight</item>
+    </style>
+</resources>

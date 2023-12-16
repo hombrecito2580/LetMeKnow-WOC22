@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "949814806264",
+    "firebase_url": "https://let-me-know-01-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "let-me-know-01",
+    "storage_bucket": "let-me-know-01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949814806264:android:91bdd3d296471e47a91d0d",
+        "android_client_info": {
+          "package_name": "com.example.letmeknow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgNvS_HnXNgxArucCm_yx6-AFBRI8VzN0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

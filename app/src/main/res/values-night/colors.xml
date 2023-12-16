@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="primary">#FFFFFFFF</color>
+    <color name="primaryDark">#0D1D70</color>
+
+    <color name="action_bar">#0B0D1A</color>
+
+    <color name="bg">#14182E</color>
+    <color name="bgLight">#454664</color>
+    <color name="bgAlter">#FFFFFFFF</color>
+
+    <color name="text">#FFFFFFFF</color>
+    <color name="textApp">#FFFFFFFF</color>
+    <color name="textLight">#C1C1C1</color>
+    <color name="textError">#FF0000</color>
+
+    <color name="btnRegular">#0D1D70</color>
+    <color name="btnAlter">#1C1F2B</color>
+</resources>
