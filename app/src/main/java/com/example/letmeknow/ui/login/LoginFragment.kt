@@ -31,6 +31,9 @@ class LoginFragment : Fragment(), View.OnFocusChangeListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.etEmail.onFocusChangeListener = this
+        binding.etPassword.onFocusChangeListener = this
+
         firebaseAuth = FirebaseAuth.getInstance()
 
         binding.btnLogin.setOnClickListener {

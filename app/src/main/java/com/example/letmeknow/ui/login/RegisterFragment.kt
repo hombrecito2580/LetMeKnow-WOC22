@@ -46,6 +46,10 @@ class RegisterFragment : Fragment(), View.OnFocusChangeListener {
                 createAccountAndRedirect()
             }
         }
+
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     override fun onDestroyView() {

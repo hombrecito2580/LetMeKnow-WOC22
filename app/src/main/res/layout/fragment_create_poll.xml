@@ -46,13 +46,13 @@
             android:layout_marginHorizontal="12dp">
 
             <LinearLayout
-                android:id="@+id/ltEtEmail"
+                android:id="@+id/ltEtQuestion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvEmail"
+                    android:id="@+id/tvQuestion"
                     style="@style/h3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                     android:textColor="@color/textLight" />
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etEmail"
+                    android:id="@+id/etQuestion"
                     style="@style/et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -69,6 +69,15 @@
                     android:scrollHorizontally="true"
                     android:singleLine="true"
                     tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                <TextView
+                    android:id="@+id/tvQuestionError"
+                    style="@style/h5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/textError"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -105,11 +114,21 @@
                         android:minHeight="72dp"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
+                    <TextView
+                        android:id="@+id/tvDescriptionError"
+                        style="@style/h5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/textError"
+                        android:visibility="gone" />
+
                 </LinearLayout>
 
             </LinearLayout>
 
             <Button
+                android:id="@+id/btnAddImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add Image (Optional)"
@@ -118,6 +137,7 @@
                 android:layout_gravity="center_horizontal" />
 
             <Button
+                android:id="@+id/btnAddDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add Description (Optional)"
@@ -134,6 +154,7 @@
                 android:textColor="@color/textLight" />
 
             <LinearLayout
+                android:id="@+id/containerOption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -152,14 +173,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Option"
-                        android:textColor="@color/textLight" />
+                        android:textColor="@color/text" />
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etOption1"
                         style="@style/et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                    <TextView
+                        android:id="@+id/tvOption1Error"
+                        style="@style/h5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/textError"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -177,20 +208,31 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Option"
-                        android:textColor="@color/textLight" />
+                        android:textColor="@color/text" />
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etOption2"
                         style="@style/et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
+                    <TextView
+                        android:id="@+id/tvOption2Error"
+                        style="@style/h5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/textError"
+                        android:visibility="gone" />
+
                 </LinearLayout>
 
             </LinearLayout>
 
             <Button
+                android:id="@+id/btnAddOption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add Option (Optional)"
@@ -202,6 +244,7 @@
                 android:id="@+id/ltEtDeadline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -212,20 +255,103 @@
                     android:text="Deadline"
                     android:textColor="@color/textLight" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etDeadline"
-                    style="@style/et"
+                <LinearLayout
+                    android:id="@+id/ltDeadline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:lines="1"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                    android:orientation="horizontal"
+                    android:baselineAligned="false">
+
+                    <!-- Days Picker -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <NumberPicker
+                            android:id="@+id/daysPicker"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            style="@style/h4"
+                            android:textColor="@color/text"
+                            android:text="Days"/>
+                    </LinearLayout>
+
+                    <!-- Hours Picker -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <NumberPicker
+                            android:id="@+id/hoursPicker"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            style="@style/h4"
+                            android:textColor="@color/text"
+                            android:text="Hours"/>
+                    </LinearLayout>
+
+                    <!-- Minutes Picker -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <NumberPicker
+                            android:id="@+id/minutesPicker"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            style="@style/h4"
+                            android:textColor="@color/text"
+                            android:text="Minutes"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/etDeadline"-->
+<!--                    style="@style/et"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="4dp"-->
+<!--                    android:lines="1"-->
+<!--                    android:scrollHorizontally="true"-->
+<!--                    android:singleLine="true"-->
+<!--                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />-->
+
+                <TextView
+                    android:id="@+id/tvDeadlineError"
+                    style="@style/h5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/textError"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
+
+
             <Button
+                android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Submit"
