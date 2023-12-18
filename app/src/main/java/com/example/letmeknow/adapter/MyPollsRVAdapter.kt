@@ -11,31 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.letmeknow.R
 import com.example.letmeknow.data.RecyclerViewData
 
-//class MyPollsRVAdapter(private val pollList: ArrayList<RecyclerViewData>): RecyclerView.Adapter<MyPollsRVAdapter.MyViewHolder>() {
-//
-//    inner class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-//        val btnRemove: Button = itemView.findViewById(R.id.btnRemove)
-//        val tvQuestion: TextView = itemView.findViewById(R.id.tvQuestion)
-//        val tvAuthor: TextView = itemView.findViewById(R.id.tvAuthor)
-//    }
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-//        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_rv_my_polls, parent, false)
-//        return MyViewHolder(itemView)
-//    }
-//
-//    override fun getItemCount(): Int {
-//        return pollList.size
-//    }
-//
-//    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-//        val currentItem = pollList[position]
-//        holder.tvQuestion.text = currentItem.question
-//        holder.tvAuthor.text = currentItem.question
-//    }
-//
-//}
-
 class MyPollsRVAdapter : ListAdapter<RecyclerViewData, MyPollsRVAdapter.MyViewHolder>(MyDiffCallback()) {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -51,8 +26,13 @@ class MyPollsRVAdapter : ListAdapter<RecyclerViewData, MyPollsRVAdapter.MyViewHo
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = getItem(position)
+
         holder.tvQuestion.text = currentItem.question
         holder.tvAuthor.text = currentItem.author
+
+        holder.btnRemove.setOnClickListener {
+
+        }
     }
 
     // DiffCallback for efficient updates

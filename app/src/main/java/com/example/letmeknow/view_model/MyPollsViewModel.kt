@@ -14,69 +14,6 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-//class MyPollsViewModel: ViewModel() {
-//    private val firebaseAuth = FirebaseAuth.getInstance()
-//    private val userId = firebaseAuth.currentUser?.uid
-//    private val firebaseDatabase = FirebaseDatabase.getInstance()
-//
-//    private val _myPolls = MutableLiveData<List<RecyclerViewData>>()
-//    val myPolls: LiveData<List<RecyclerViewData>> get() = _myPolls
-//
-//    private val _dialogFlag: MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply { value = false }
-//    val dialogFlag: LiveData<Boolean> get() = _dialogFlag
-//
-//    fun getMyPolls() {
-//        if(userId != null) {
-//            _dialogFlag.value = true
-//
-//            val userPollsReference = firebaseDatabase.getReference("users/$userId/polls")
-//
-//            userPollsReference.addListenerForSingleValueEvent(object: ValueEventListener {
-//                override fun onDataChange(snapshot: DataSnapshot) {
-//                    val pollIds = snapshot.children.map { it.key ?: "" }
-//                    val polls = mutableListOf<RecyclerViewData>()
-//
-//                    val latch = CountDownLatch(pollIds.size)
-//
-//                    for(pollId in pollIds) {
-//                        val pollReference = FirebaseDatabase.getInstance().getReference("polls/$pollId")
-//
-//                        pollReference.addListenerForSingleValueEvent(object: ValueEventListener {
-//                            override fun onDataChange(snapshot: DataSnapshot) {
-//                                val question = snapshot.child("question").getValue(String::class.java)!!
-//                                val author = snapshot.child("author").getValue(String::class.java)!!
-//                                val poll = RecyclerViewData(pollId, question, author)
-//
-//                                polls.add(poll)
-//                                latch.countDown()
-//
-//                                if (latch.count == 0L) {
-//                                    // All tasks are complete, update LiveData
-//                                    _myPolls.value = polls
-//                                }
-//                            }
-//
-//                            override fun onCancelled(error: DatabaseError) {
-//                                latch.countDown()
-//                            }
-//
-//                        })
-//                    }
-//
-//                    latch.await(10, TimeUnit.SECONDS)
-//                    _dialogFlag.value = false
-//                }
-//
-//                override fun onCancelled(error: DatabaseError) {
-//                    _dialogFlag.value = false
-//                }
-//
-//            })
-//        }
-//    }
-//
-//}
-
 class MyPollsViewModel : ViewModel() {
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val userId = firebaseAuth.currentUser?.uid
@@ -88,10 +25,14 @@ class MyPollsViewModel : ViewModel() {
     private val _dialogFlag: MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply { value = false }
     val dialogFlag: LiveData<Boolean> get() = _dialogFlag
 
+    private val _userLoggedIn = MutableLiveData<Boolean>()
+//    val userLoggedIn: LiveData<Boolean> get() = _userLoggedIn
+
     fun getMyPolls() {
         viewModelScope.launch {
             if (userId != null) {
                 _dialogFlag.value = true
+                _userLoggedIn.value = true
 
                 try {
                     val userPollsReference = firebaseDatabase.getReference("users/$userId/polls")
@@ -140,6 +81,8 @@ class MyPollsViewModel : ViewModel() {
                 } finally {
                     _dialogFlag.value = false
                 }
+            } else {
+                _userLoggedIn.value = false
             }
         }
     }

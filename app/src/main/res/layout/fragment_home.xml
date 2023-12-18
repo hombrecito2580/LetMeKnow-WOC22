@@ -24,11 +24,19 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginStart="32dp"
-            android:text="Create Poll"
+            android:text="Home"
             android:textColor="@color/white" />
 
     </androidx.appcompat.widget.Toolbar>
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPolls"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:listitem="@layout/layout_rv_home"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

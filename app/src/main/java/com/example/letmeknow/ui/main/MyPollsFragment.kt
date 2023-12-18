@@ -70,9 +70,5 @@ class MyPollsFragment : Fragment() {
         }
 
         viewModel.getMyPolls()
-
-//        viewModel.getMyPolls().observe(viewLifecycleOwner, {polls ->
-//            myAdapter.su
-//        })
     }
 }
