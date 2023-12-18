@@ -7,6 +7,8 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
@@ -31,9 +33,15 @@ class ProfileFragment : Fragment() {
         dialog = Dialog(requireActivity())
         dialog.setContentView(R.layout.progress_bar)
         dialog.setCancelable(false)
-        if (dialog.window != null) {
-            dialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+        val layoutParams = WindowManager.LayoutParams().apply {
+            width = WindowManager.LayoutParams.MATCH_PARENT
+            height = WindowManager.LayoutParams.MATCH_PARENT
         }
+        dialog.window?.attributes = layoutParams
+        if (dialog.window != null) {
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(requireContext(), R.color.bg)))
+        }
+        // ColorDrawable(0)
 
         profileViewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
 

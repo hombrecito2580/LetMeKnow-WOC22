@@ -38,6 +38,7 @@ class ProfileViewModel: ViewModel() {
 
         if(firebaseUser == null) {
             _userLoggedIn.value = false
+            _dialogFlag.value = false
         }
         else {
             _userLoggedIn.value = true

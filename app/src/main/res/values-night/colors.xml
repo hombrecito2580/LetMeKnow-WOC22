@@ -13,7 +13,7 @@
 
     <color name="text">#FFFFFFFF</color>
     <color name="textApp">#FFFFFFFF</color>
-    <color name="textLight">#C1C1C1</color>
+    <color name="textLight">#DADADA</color>
     <color name="textError">#FF0000</color>
 
     <color name="btnRegular">#0D1D70</color>

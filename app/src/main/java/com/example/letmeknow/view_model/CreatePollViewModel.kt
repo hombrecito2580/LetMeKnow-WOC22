@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.getValue
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.CompletableDeferred
@@ -48,7 +49,16 @@ class CreatePollViewModel : ViewModel() {
         }
         _userLoggedIn.value = true
         val uid = firebaseUser.uid
-        val pollsRef = firebaseDatabase.getReference("users/$uid/polls")
+        val userPollsRef = firebaseDatabase.getReference("users/$uid/polls")
+        val pollsRef = firebaseDatabase.getReference("polls")
+
+        var userName = ""
+        val userRef = firebaseDatabase.getReference("users/$uid/name")
+        userRef.get().addOnSuccessListener {
+            if(it.exists()) {
+                userName = it.getValue(String::class.java)!!
+            }
+        }
 
         return try {
             val completionDeferred = CompletableDeferred<Boolean>()
@@ -68,15 +78,18 @@ class CreatePollViewModel : ViewModel() {
                         "question" to question,
                         "input" to updatedInputMap,
                         "options" to updatedOptionMap,
-                        "deadline" to utcDeadlineString
+                        "deadline" to utcDeadlineString,
+                        "author" to userName
                     )
 
-                    pollsRef.push().setValue(dataMap).await()
+                    val pollIdReference = pollsRef.push()
+                    val pollId = pollIdReference.key
+                    pollIdReference.setValue(dataMap).await()
+                    userPollsRef.child(pollId!!).setValue(true)
                     completionDeferred.complete(true)
                 } catch (e: Exception) {
                     completionDeferred.complete(false)
                 }
-
             }
             completionDeferred.await()
         } catch (e: Exception) {
@@ -87,8 +100,9 @@ class CreatePollViewModel : ViewModel() {
     private fun processInputMap(inputMap: LinkedHashMap<Int, PollItem>): Map<String, PollItemCompressed> {
         val map = mutableMapOf<String, PollItemCompressed>()
         var itemKey = 0
-        for((_, value) in inputMap) {
-            map[itemKey.toString()] = PollItemCompressed(value.type, value.descriptionData, value.imageUrl)
+        for ((_, value) in inputMap) {
+            map[itemKey.toString()] =
+                PollItemCompressed(value.type, value.descriptionData, value.imageUrl)
             itemKey++
         }
         return map
@@ -97,7 +111,7 @@ class CreatePollViewModel : ViewModel() {
     private fun processOptionMap(optionMap: LinkedHashMap<Int, String>): Map<String, String> {
         val map = mutableMapOf<String, String>()
         var itemKey = 0
-        for((_, value) in optionMap) {
+        for ((_, value) in optionMap) {
             map[itemKey.toString()] = value
             itemKey++
         }
@@ -107,17 +121,18 @@ class CreatePollViewModel : ViewModel() {
     private suspend fun processImageUploads(inputMap: LinkedHashMap<Int, PollItem>) {
         val uploadTasks = mutableListOf<Task<Uri>>()
 
-        for((_, input) in inputMap) {
-            if(input.type == "image") {
-                val imageRef: StorageReference = storageRef.child("pollData/" + System.currentTimeMillis() + ".jpg")
+        for ((_, input) in inputMap) {
+            if (input.type == "image") {
+                val imageRef: StorageReference =
+                    storageRef.child("pollData/" + System.currentTimeMillis() + ".jpg")
                 val task = imageRef.putFile(input.imageUri)
                     .continueWithTask {
-                        if(!it.isSuccessful) {
+                        if (!it.isSuccessful) {
                             input.imageUrl = ""
                         }
                         imageRef.downloadUrl
                     }.addOnCompleteListener {
-                        if(it.isSuccessful) {
+                        if (it.isSuccessful) {
                             val downloadUrl: Uri? = it.result
                             input.imageUrl = downloadUrl?.toString() ?: ""
                         }
@@ -179,7 +194,7 @@ class CreatePollViewModel : ViewModel() {
 //            val utcDeadline = calculateDeadlineTime(days, hours, minutes)
 //            val dataMap = mapOf("question" to question, "input" to inputMap, "options" to optionMap, "deadline" to utcDeadline.toString())
 //
-//            pollsRef.push().setValue(dataMap)
+//            userPollsRef.push().setValue(dataMap)
 //                .addOnCompleteListener { task ->
 //                    if(task.isSuccessful) {
 //                        result = true
@@ -243,7 +258,7 @@ class CreatePollViewModel : ViewModel() {
 //            // Use async to await the completion of the database operation
 //            val databaseOperation = async {
 //                suspendCancellableCoroutine { continuation ->
-//                    pollsRef.push().setValue(dataMap)
+//                    userPollsRef.push().setValue(dataMap)
 //                        .addOnCompleteListener { task ->
 //                            if (task.isSuccessful) {
 //                                continuation.resume(true)

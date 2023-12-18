@@ -174,8 +174,6 @@ class CreatePollFragment : Fragment(), View.OnFocusChangeListener {
                 lifecycleScope.launch {
                     dialog.show()
 
-
-
                     if (viewModel.submitData(
                             binding.etQuestion.text.toString(),
                             inputMap,
@@ -243,7 +241,7 @@ class CreatePollFragment : Fragment(), View.OnFocusChangeListener {
         var error: String? = null
         val question = binding.etQuestion.text.toString().trim()
         if (question.isEmpty()) {
-            error = "Please enter your question."
+            error = "Please enter the question."
         }
 
         if (error != null) {
@@ -260,7 +258,7 @@ class CreatePollFragment : Fragment(), View.OnFocusChangeListener {
         var error: String? = null
         val option = binding.etOption1.text.toString().trim()
         if (option.isEmpty()) {
-            error = "Please enter your question."
+            error = "Please enter this option."
         }
 
         if (error != null) {
@@ -277,7 +275,7 @@ class CreatePollFragment : Fragment(), View.OnFocusChangeListener {
         var error: String? = null
         val option = binding.etOption2.text.toString().trim()
         if (option.isEmpty()) {
-            error = "Please enter your question."
+            error = "Please enter this option."
         }
 
         if (error != null) {

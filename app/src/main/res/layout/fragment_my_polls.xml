@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.main.MyPollsFragment">
 
@@ -29,8 +30,10 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPolls"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        tools:listitem="@layout/layout_rv_my_polls"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
