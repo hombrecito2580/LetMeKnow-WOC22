@@ -16,7 +16,7 @@ class PollAnalysisViewModel: ViewModel() {
     var question = ""
     var input = ArrayList<PollItemCompressed>()
     private var options = ArrayList<String>()
-    private var responses = HashMap<String, Int>()
+    private var responses: HashMap<String, Int>? = null
     var optionPair = ArrayList<MyPair>()
 
     fun loadData(pollId: String, completed: (Boolean) -> Unit) {
@@ -44,8 +44,10 @@ class PollAnalysisViewModel: ViewModel() {
                     optionPair.add(pair)
                 }
 
-                for(response in responses) {
-                    optionPair[response.value].second++
+                if(responses != null) {
+                    for(response in responses!!) {
+                        optionPair[response.value].second++
+                    }
                 }
 
                 completed(true)
@@ -92,7 +94,7 @@ class PollAnalysisViewModel: ViewModel() {
 
         responseRef.get().addOnCompleteListener { responseTask ->
             if(responseTask.isSuccessful) {
-                responses = responseTask.result?.getValue(object : GenericTypeIndicator<HashMap<String, Int>>() {})!!
+                responses = responseTask.result?.getValue(object : GenericTypeIndicator<HashMap<String, Int>>() {})
 
                 println("Value of 'responses' : $responses")
                 println("\n\n\n\n\n\n\n\n\n\n\n")
