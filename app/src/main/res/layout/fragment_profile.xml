@@ -47,7 +47,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/etEditProfile"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/ivProfile"
@@ -59,9 +60,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:text="Let Me Know User"
             android:lines="1"
             android:ellipsize="end"
-            android:text="Let Me Know User"
             android:textAlignment="textStart"
             android:textColor="@color/textLight" />
 
@@ -78,20 +79,20 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/etEditProfile"
-        style="@style/h4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:lines="1"
-        android:text="Edit Profile"
-        android:textAlignment="textStart"
-        android:textColor="@color/textApp"
-        app:layout_constraintBottom_toTopOf="@id/guideline2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/ivProfile"
-        app:layout_constraintTop_toBottomOf="@+id/ltDetails" />
+<!--    <TextView-->
+<!--        android:id="@+id/etEditProfile"-->
+<!--        style="@style/h4"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:lines="1"-->
+<!--        android:text="Edit Profile"-->
+<!--        android:textAlignment="textStart"-->
+<!--        android:textColor="@color/textApp"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/guideline2"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.5"-->
+<!--        app:layout_constraintStart_toEndOf="@id/ivProfile"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/ltDetails" />-->
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
@@ -101,13 +102,149 @@
         app:layout_constraintTop_toBottomOf="@id/guideline2"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnEditProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="12dp"
+                android:backgroundTint="@color/bgLight"
+                android:layout_margin="12dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:padding="8dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/h4"
+                        android:textColor="@color/text"
+                        android:text="Edit Profile" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/h5"
+                        android:textColor="@color/textLight"
+                        android:text="Change your name, about and profile picture" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnChangePassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="12dp"
+                android:backgroundTint="@color/bgLight"
+                android:layout_margin="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:padding="8dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/h4"
+                        android:textColor="@color/text"
+                        android:text="Change Password"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/h5"
+                        android:textColor="@color/textLight"
+                        android:text="Change your account's password"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvEditProfile" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnThemes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="12dp"
+                android:backgroundTint="@color/bgLight"
+                android:layout_margin="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:padding="8dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvEditProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/h4"
+                        android:textColor="@color/text"
+                        android:text="Theme" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/h5"
+                        android:textColor="@color/textLight"
+                        android:text="Select the app's display theme" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="12dp"
+                android:backgroundTint="@color/bgLight"
+                android:layout_margin="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:padding="8dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/h4"
+                        android:textColor="@color/textError"
+                        android:text="Logout" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/h5"
+                        android:textColor="@color/textError"
+                        android:text="Logout from this device" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 

@@ -196,33 +196,11 @@ class EditProfileFragment : Fragment() {
         val btnDelete = bottomSheetView.findViewById<ImageView>(R.id.btnDelete)
 
         btnCamera.setOnClickListener {
-//            if (ContextCompat.checkSelfPermission(
-//                    requireContext(),
-//                    Manifest.permission.CAMERA
-//                ) == PackageManager.PERMISSION_GRANTED
-//            ) {
-//                // Camera permission is already granted, proceed with camera-related operations
-//                openCamera()
-//            } else {
-//                // Request camera permission
-//                requestCameraPermission()
-//            }
             openCamera()
             dialog.dismiss()
         }
 
         btnGallery.setOnClickListener {
-//            if (ContextCompat.checkSelfPermission(
-//                    requireContext(),
-//                    Manifest.permission.READ_EXTERNAL_STORAGE
-//                ) == PackageManager.PERMISSION_GRANTED
-//            ) {
-//                // Permission is already granted, proceed with gallery-related operations
-//                openGallery()
-//            } else {
-//                // Request external storage permission
-//                requestGalleryPermission()
-//            }
             openGallery()
             dialog.dismiss()
         }
@@ -245,17 +223,7 @@ class EditProfileFragment : Fragment() {
         galleryLauncher.launch(galleryIntent)
     }
 
-//    private fun requestGalleryPermission() {
-//        // You can implement your own logic for requesting external storage permission
-//        // For simplicity, I'm using the requestPermissions method here
-//        requestPermissions(
-//            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-//            galleryPermissionRequestCode
-//        )
-//    }
-
     private fun updateImageView(imageBitmap: Bitmap?) {
-        // Use an image-loading library like Glide or Picasso to load the image into the ImageView
         if (imageBitmap != null) {
             Glide.with(this)
                 .load(imageBitmap)
@@ -265,7 +233,6 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun updateImageView(imageUri: Uri?) {
-        // Use an image-loading library like Glide or Picasso to load the image into the ImageView
         if (imageUri != null) {
             Glide.with(this)
                 .load(imageUri)

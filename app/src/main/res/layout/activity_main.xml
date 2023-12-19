@@ -24,6 +24,7 @@
         android:layout_height="0dp"
         android:background="@color/bgLight"
         app:menu="@menu/menu_bottom_nav"
+        app:itemBackground="@null"
         app:itemTextColor="@color/primary"
         app:labelVisibilityMode="unlabeled"
         app:itemIconTint="@drawable/bottom_nav_icon_color"

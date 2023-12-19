@@ -62,4 +62,14 @@ class ProfileViewModel: ViewModel() {
         }
 
     }
+
+    fun signOut(): Boolean {
+        return try {
+            FirebaseAuth.getInstance().signOut()
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
 }

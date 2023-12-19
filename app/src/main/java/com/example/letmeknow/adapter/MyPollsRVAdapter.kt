@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.letmeknow.R
 import com.example.letmeknow.data.RecyclerViewData
 
-class MyPollsRVAdapter : ListAdapter<RecyclerViewData, MyPollsRVAdapter.MyViewHolder>(MyDiffCallback()) {
+class MyPollsRVAdapter(private val onDeleteClick: (String) -> Unit) : ListAdapter<RecyclerViewData, MyPollsRVAdapter.MyViewHolder>(MyDiffCallback()) {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val btnRemove: Button = itemView.findViewById(R.id.btnRemove)
@@ -31,7 +31,7 @@ class MyPollsRVAdapter : ListAdapter<RecyclerViewData, MyPollsRVAdapter.MyViewHo
         holder.tvAuthor.text = currentItem.author
 
         holder.btnRemove.setOnClickListener {
-
+            onDeleteClick.invoke(currentItem.pollId)
         }
     }
 

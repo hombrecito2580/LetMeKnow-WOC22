@@ -22,7 +22,7 @@ class MyPollsFragment : Fragment() {
     private var _binding: FragmentMyPollsBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: MyPollsViewModel
-    private val myPollsAdapter = MyPollsRVAdapter()
+    private lateinit var myPollsAdapter: MyPollsRVAdapter
     private lateinit var dialog: Dialog
 
     override fun onCreateView(
@@ -54,6 +54,10 @@ class MyPollsFragment : Fragment() {
 
         val layoutManager = LinearLayoutManager(context)
         binding.rvPolls.layoutManager = layoutManager
+
+        myPollsAdapter = MyPollsRVAdapter { pollId ->
+            viewModel.deletePoll(pollId)
+        }
         binding.rvPolls.adapter = myPollsAdapter
 
         viewModel.dialogFlag.observe(viewLifecycleOwner) { flag ->

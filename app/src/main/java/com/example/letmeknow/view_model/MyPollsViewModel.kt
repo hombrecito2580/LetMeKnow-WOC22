@@ -1,5 +1,6 @@
 package com.example.letmeknow.view_model
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +11,11 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -28,8 +33,12 @@ class MyPollsViewModel : ViewModel() {
     private val _userLoggedIn = MutableLiveData<Boolean>()
 //    val userLoggedIn: LiveData<Boolean> get() = _userLoggedIn
 
+    private var myPollsJob: Job? = null
+
     fun getMyPolls() {
-        viewModelScope.launch {
+        myPollsJob?.cancel()
+
+        myPollsJob = viewModelScope.launch {
             if (userId != null) {
                 _dialogFlag.value = true
                 _userLoggedIn.value = true
@@ -85,6 +94,59 @@ class MyPollsViewModel : ViewModel() {
                 _userLoggedIn.value = false
             }
         }
+    }
+
+    fun deletePoll(pollId: String) {
+        viewModelScope.launch {
+            try {
+                _dialogFlag.value = true
+
+                deleteImagesFromStorage(pollId)
+                deletePollEntries(pollId)
+
+//                val pollReference = firebaseDatabase.getReference("polls/$pollId")
+//                pollReference.removeValue()
+//
+//                val userPollsReference = firebaseDatabase.getReference("users/$userId/polls/$pollId")
+//                userPollsReference.removeValue()
+
+                getMyPolls()
+            } catch (e: Exception) {
+                // Handle exceptions
+            } finally {
+                delay(500)
+                _dialogFlag.value = false
+            }
+        }
+    }
+
+    private suspend fun deleteImagesFromStorage(pollId: String) {
+        // Assuming you have a reference to your Firebase Storage
+        val storageReference = FirebaseStorage.getInstance().getReference("pollData/$pollId")
+
+        try {
+            // Get a list of items (images) from the storage reference
+            val imageList = storageReference.listAll().await()
+
+            // Iterate through the images and delete each one
+            imageList.items.forEach { imageReference ->
+                imageReference.delete().await()
+            }
+
+            Log.d("Storage", "All images deleted successfully")
+        } catch (e: Exception) {
+            Log.e("Storage", "Error deleting images: ${e.message}")
+            // Handle exceptions
+        }
+    }
+
+    private suspend fun deletePollEntries(pollId: String) {
+        // Delete poll entries from Realtime Database
+        val pollReference = firebaseDatabase.getReference("polls/$pollId")
+        pollReference.removeValue()
+
+        val userPollsReference = firebaseDatabase.getReference("users/$userId/polls/$pollId")
+        userPollsReference.removeValue()
     }
 }
 

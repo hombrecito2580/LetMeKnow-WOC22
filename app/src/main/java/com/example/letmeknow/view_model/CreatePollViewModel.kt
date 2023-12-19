@@ -29,7 +29,7 @@ class CreatePollViewModel : ViewModel() {
     private val firebaseUser = firebaseAuth.currentUser
     private val firebaseDatabase = FirebaseDatabase.getInstance()
     private val firebaseStorage = FirebaseStorage.getInstance()
-    private val storageRef = firebaseStorage.reference
+//    private val storageRef = firebaseStorage.reference
 
     private val _userLoggedIn = MutableLiveData<Boolean>()
 
@@ -58,14 +58,17 @@ class CreatePollViewModel : ViewModel() {
             if(it.exists()) {
                 userName = it.getValue(String::class.java)!!
             }
-        }
+        }.await()
 
         return try {
             val completionDeferred = CompletableDeferred<Boolean>()
 
             viewModelScope.launch {
                 try {
-                    processImageUploads(inputMap)
+                    val pollIdReference = pollsRef.push()
+                    val pollId = pollIdReference.key
+
+                    processImageUploads(inputMap, pollId!!)
 
                     val updatedInputMap = processInputMap(inputMap)
                     val updatedOptionMap = processOptionMap(optionMap)
@@ -82,8 +85,6 @@ class CreatePollViewModel : ViewModel() {
                         "author" to userName
                     )
 
-                    val pollIdReference = pollsRef.push()
-                    val pollId = pollIdReference.key
                     pollIdReference.setValue(dataMap).await()
                     userPollsRef.child(pollId!!).setValue(true)
                     completionDeferred.complete(true)
@@ -118,13 +119,14 @@ class CreatePollViewModel : ViewModel() {
         return map
     }
 
-    private suspend fun processImageUploads(inputMap: LinkedHashMap<Int, PollItem>) {
+    private suspend fun processImageUploads(inputMap: LinkedHashMap<Int, PollItem>, pollId: String) {
         val uploadTasks = mutableListOf<Task<Uri>>()
+        val storageRef = FirebaseStorage.getInstance().getReference("pollData/$pollId")
 
         for ((_, input) in inputMap) {
             if (input.type == "image") {
                 val imageRef: StorageReference =
-                    storageRef.child("pollData/" + System.currentTimeMillis() + ".jpg")
+                    storageRef.child(System.currentTimeMillis().toString() + ".jpg")
                 val task = imageRef.putFile(input.imageUri)
                     .continueWithTask {
                         if (!it.isSuccessful) {
