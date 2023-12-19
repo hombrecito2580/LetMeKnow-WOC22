@@ -2,15 +2,18 @@ package com.example.letmeknow.ui.main
 
 import android.app.Dialog
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.letmeknow.R
 import com.example.letmeknow.adapter.MyPollsRVAdapter
@@ -49,15 +52,20 @@ class MyPollsFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val layoutManager = LinearLayoutManager(context)
         binding.rvPolls.layoutManager = layoutManager
 
-        myPollsAdapter = MyPollsRVAdapter { pollId ->
-            viewModel.deletePoll(pollId)
-        }
+        myPollsAdapter = MyPollsRVAdapter(
+            { pollId -> viewModel.deletePoll(pollId) },
+            { pollId ->
+                val direction = MyPollsFragmentDirections.actionMyPollsFragmentToPollAnalysisFragment(id = pollId)
+                findNavController().navigate(direction)
+            }
+        )
         binding.rvPolls.adapter = myPollsAdapter
 
         viewModel.dialogFlag.observe(viewLifecycleOwner) { flag ->

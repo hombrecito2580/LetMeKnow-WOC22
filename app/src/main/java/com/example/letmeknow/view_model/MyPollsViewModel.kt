@@ -88,7 +88,13 @@ class MyPollsViewModel : ViewModel() {
                         val deadline = pollSnapshot?.child("deadline")?.getValue(String::class.java)
 
                         val poll = RecyclerViewData(pollId, question, author)
-                        poll.expired = deadline != null && !hasDeadlinePassed(deadline)
+                        if(deadline != null) {
+                            poll.expired = !hasDeadlinePassed(deadline)
+                            Log.d("QQQQQQQQQQQQQQQQQQQQQQQQ", hasDeadlinePassed(deadline).toString())
+                        } else {
+                            Log.d("DDDDDDDDDDDDDDDDDDDDDDDDDD", "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
+                        }
+//                        poll.expired = deadline != null && !hasDeadlinePassed(deadline)
 
                         polls.add(poll)
                     }

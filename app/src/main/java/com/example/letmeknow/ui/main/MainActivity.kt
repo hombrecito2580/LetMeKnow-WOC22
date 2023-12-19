@@ -37,6 +37,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.editProfileFragment -> {
                     bottomNavigation.visibility = View.GONE
                 }
+                R.id.answerPollFragment -> {
+                    bottomNavigation.visibility = View.GONE
+                }
+                R.id.pollAnalysisFragment -> {
+                    bottomNavigation.visibility = View.GONE
+                }
                 else -> {
                     bottomNavigation.visibility = View.VISIBLE
                 }

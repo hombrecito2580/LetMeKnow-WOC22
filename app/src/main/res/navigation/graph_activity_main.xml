@@ -27,7 +27,11 @@
         android:id="@+id/myPollsFragment"
         android:name="com.example.letmeknow.ui.main.MyPollsFragment"
         android:label="fragment_my_polls"
-        tools:layout="@layout/fragment_my_polls" />
+        tools:layout="@layout/fragment_my_polls" >
+        <action
+            android:id="@+id/action_myPollsFragment_to_pollAnalysisFragment"
+            app:destination="@id/pollAnalysisFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.letmeknow.ui.main.ProfileFragment"
@@ -63,6 +67,16 @@
         android:name="com.example.letmeknow.ui.main.AnswerPollFragment"
         android:label="fragment_answer_poll"
         tools:layout="@layout/fragment_answer_poll" >
+        <argument
+            android:name="id"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+    <fragment
+        android:id="@+id/pollAnalysisFragment"
+        android:name="com.example.letmeknow.ui.main.PollAnalysisFragment"
+        android:label="fragment_poll_analysis"
+        tools:layout="@layout/fragment_poll_analysis">
         <argument
             android:name="id"
             app:argType="string"
