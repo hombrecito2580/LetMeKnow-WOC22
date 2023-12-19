@@ -4,4 +4,6 @@ data class PollItemCompressed(
     val type: String,
     val descriptionData: String,
     val imageUrl: String
-)
+) {
+    constructor(): this("", "", "")
+}

@@ -4,17 +4,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.letmeknow.R
 import com.example.letmeknow.data.RecyclerViewData
 
-class HomeRVAdapter: ListAdapter<RecyclerViewData, HomeRVAdapter.MyViewHolder>(MyDiffCallback()) {
+class HomeRVAdapter(private val onPollClick: (String) -> Unit): ListAdapter<RecyclerViewData, HomeRVAdapter.MyViewHolder>(MyDiffCallback()) {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvQuestion: TextView = itemView.findViewById(R.id.tvQuestion)
         val tvAuthor: TextView = itemView.findViewById(R.id.tvAuthor)
+        val cvPoll: CardView = itemView.findViewById(R.id.cvPoll)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -27,6 +29,10 @@ class HomeRVAdapter: ListAdapter<RecyclerViewData, HomeRVAdapter.MyViewHolder>(M
 
         holder.tvQuestion.text = currentItem.question
         holder.tvAuthor.text = currentItem.author
+
+        holder.cvPoll.setOnClickListener {
+            onPollClick.invoke(currentItem.pollId)
+        }
     }
 
     // DiffCallback for efficient updates

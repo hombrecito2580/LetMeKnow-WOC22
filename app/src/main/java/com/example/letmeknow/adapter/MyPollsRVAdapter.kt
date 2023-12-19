@@ -17,6 +17,7 @@ class MyPollsRVAdapter(private val onDeleteClick: (String) -> Unit) : ListAdapte
         val btnRemove: Button = itemView.findViewById(R.id.btnRemove)
         val tvQuestion: TextView = itemView.findViewById(R.id.tvQuestion)
         val tvAuthor: TextView = itemView.findViewById(R.id.tvAuthor)
+        val tvStatus: TextView = itemView.findViewById(R.id.tvStatus)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -29,6 +30,14 @@ class MyPollsRVAdapter(private val onDeleteClick: (String) -> Unit) : ListAdapte
 
         holder.tvQuestion.text = currentItem.question
         holder.tvAuthor.text = currentItem.author
+
+        if(currentItem.expired != null) {
+            if(currentItem.expired!!) {
+                holder.tvStatus.text = "Status: Active"
+            } else {
+                holder.tvStatus.text = "Status: Expired"
+            }
+        }
 
         holder.btnRemove.setOnClickListener {
             onDeleteClick.invoke(currentItem.pollId)

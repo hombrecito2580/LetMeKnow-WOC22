@@ -1,6 +1,8 @@
 package com.example.letmeknow.view_model
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,6 +18,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -35,6 +40,7 @@ class MyPollsViewModel : ViewModel() {
 
     private var myPollsJob: Job? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getMyPolls() {
         myPollsJob?.cancel()
 
@@ -46,7 +52,7 @@ class MyPollsViewModel : ViewModel() {
                 try {
                     val userPollsReference = firebaseDatabase.getReference("users/$userId/polls")
 
-                    val snapshot = suspendCoroutine<DataSnapshot?> { continuation ->
+                    val snapshot = suspendCoroutine { continuation ->
                         userPollsReference.addListenerForSingleValueEvent(object :
                             ValueEventListener {
                             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -79,8 +85,11 @@ class MyPollsViewModel : ViewModel() {
 
                         val question = pollSnapshot?.child("question")?.getValue(String::class.java) ?: ""
                         val author = pollSnapshot?.child("author")?.getValue(String::class.java) ?: ""
+                        val deadline = pollSnapshot?.child("deadline")?.getValue(String::class.java)
 
                         val poll = RecyclerViewData(pollId, question, author)
+                        poll.expired = deadline != null && !hasDeadlinePassed(deadline)
+
                         polls.add(poll)
                     }
 
@@ -96,6 +105,7 @@ class MyPollsViewModel : ViewModel() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun deletePoll(pollId: String) {
         viewModelScope.launch {
             try {
@@ -140,13 +150,31 @@ class MyPollsViewModel : ViewModel() {
         }
     }
 
-    private suspend fun deletePollEntries(pollId: String) {
+    private fun deletePollEntries(pollId: String) {
         // Delete poll entries from Realtime Database
         val pollReference = firebaseDatabase.getReference("polls/$pollId")
         pollReference.removeValue()
 
         val userPollsReference = firebaseDatabase.getReference("users/$userId/polls/$pollId")
         userPollsReference.removeValue()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun hasDeadlinePassed(deadline: String): Boolean {
+        val formatter =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.of("UTC"))
+
+        return try {
+            val currentUtcTime = LocalDateTime.now(ZoneId.of("UTC"))
+            val deadlineDate = LocalDateTime.parse(deadline, formatter)
+
+            // Compare the current UTC time with the deadline
+            currentUtcTime.isAfter(deadlineDate)
+        } catch (e: Exception) {
+            // Handle parsing exceptions
+            e.printStackTrace()
+            false // Assume deadline hasn't passed in case of parsing issues
+        }
     }
 }
 

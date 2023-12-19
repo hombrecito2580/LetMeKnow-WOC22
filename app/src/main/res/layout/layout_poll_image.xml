@@ -1,0 +1,17 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:ignore="hardcodedText">
+
+    <ImageView
+        android:id="@+id/ivDescription"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_image"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
+        android:contentDescription="ivDescription" />
+
+</LinearLayout>
