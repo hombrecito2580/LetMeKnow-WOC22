@@ -5,7 +5,7 @@
     <color name="primary">#1835C6</color>
     <color name="primaryDark">#0D1D70</color>
 
-    <color name="action_bar">#545559</color>
+    <color name="action_bar">#0D1D70</color>
 
     <color name="bg">#FFFFFFFF</color>
     <color name="bgLight">#C4C6CC</color>

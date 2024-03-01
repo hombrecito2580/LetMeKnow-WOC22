@@ -1,12 +1,18 @@
 package com.example.letmeknow.ui.login
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.example.letmeknow.R
 import com.example.letmeknow.databinding.FragmentLoginBinding
@@ -19,12 +25,21 @@ class LoginFragment : Fragment(), View.OnFocusChangeListener {
     private val binding: FragmentLoginBinding get() = _binding!!
 
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var dialog: Dialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
+
+        dialog = Dialog(requireActivity())
+        dialog.setContentView(R.layout.progress_bar)
+        dialog.setCancelable(false)
+        if (dialog.window != null) {
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+        }
+
         return binding.root
     }
 
@@ -42,8 +57,49 @@ class LoginFragment : Fragment(), View.OnFocusChangeListener {
             }
         }
 
+        binding.btnForgotPassword.setOnClickListener {
+            showForgotPasswordDialog()
+        }
+
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
+        }
+    }
+
+    private fun showForgotPasswordDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.forgot_password_dialog, null)
+        val emailEditText = dialogView.findViewById<EditText>(R.id.emailEditText)
+        val sendEmailButton = dialogView.findViewById<Button>(R.id.sendEmailButton)
+        val emailErrorText = dialogView.findViewById<TextView>(R.id.emailErrorText)
+
+        val builder = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .setCancelable(true)
+
+        val forgotDialog = builder.show()
+
+        sendEmailButton.setOnClickListener {
+            val email = emailEditText.text.toString().trim()
+            if (email.isEmpty()) {
+                emailErrorText.visibility = View.VISIBLE
+                emailErrorText.text = "Please enter your email"
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                emailErrorText.visibility = View.VISIBLE
+                emailErrorText.text = "Invalid email"
+            } else {
+                emailErrorText.visibility = View.GONE
+                dialog.show()
+                FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                    .addOnCompleteListener {
+                        if(it.isSuccessful) {
+                            requireActivity().showCustomToast("Verification Email Sent!")
+                        } else {
+                            requireActivity().showCustomToast("Couldn't send verification email...")
+                        }
+                        forgotDialog.dismiss()
+                        dialog.dismiss()
+                    }
+            }
         }
     }
 
@@ -53,6 +109,7 @@ class LoginFragment : Fragment(), View.OnFocusChangeListener {
     }
 
     private fun loginAndRedirect() {
+        dialog.show()
         val email = binding.etEmail.text.toString().trim()
         val password = binding.etPassword.text.toString().trim()
 
@@ -63,8 +120,10 @@ class LoginFragment : Fragment(), View.OnFocusChangeListener {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                dialog.dismiss()
                 startActivity(intent)
             } else {
+                dialog.dismiss()
                 requireActivity().showCustomToast("Login Failed. Please Try Again.")
             }
         }

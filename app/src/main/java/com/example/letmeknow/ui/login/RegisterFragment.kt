@@ -1,6 +1,8 @@
 package com.example.letmeknow.ui.login
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -22,12 +24,21 @@ class RegisterFragment : Fragment(), View.OnFocusChangeListener {
     private val binding: FragmentRegisterBinding get() = _binding!!
 
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var dialog: Dialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
+
+        dialog = Dialog(requireActivity())
+        dialog.setContentView(R.layout.progress_bar)
+        dialog.setCancelable(false)
+        if (dialog.window != null) {
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+        }
+
         return binding.root
     }
 
@@ -58,6 +69,7 @@ class RegisterFragment : Fragment(), View.OnFocusChangeListener {
     }
 
     private fun createAccountAndRedirect() {
+        dialog.show()
         val name = binding.etName.text.toString().trim()
         val email = binding.etEmail.text.toString().trim()
         val password = binding.etPassword.text.toString().trim()
@@ -78,13 +90,16 @@ class RegisterFragment : Fragment(), View.OnFocusChangeListener {
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                dialog.dismiss()
                                 startActivity(intent)
                             } else {
+                                dialog.dismiss()
                                 requireActivity().showCustomToast("Registration Failed. Please Try Again.")
                                 Log.d("STORAGE_ERROR", storeTask.exception.toString())
                             }
                         }
                 } else {
+                    dialog.dismiss()
                     requireActivity().showCustomToast("Registration Failed. Please Try Again.")
                     Log.d("CREATE_ERROR", createTask.exception.toString())
                 }

@@ -142,6 +142,7 @@ class PollAnalysisFragment : Fragment() {
         binding.barChart.axisLeft.textColor = ContextCompat.getColor(requireContext(), R.color.text) // Left Y-axis labels
 
         binding.barChart.legend.isEnabled = false
+        binding.barChart.setScaleEnabled(false)
 
         binding.barChart.data = barData
 

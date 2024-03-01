@@ -73,9 +73,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:lines="1"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
                     tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
             </LinearLayout>
