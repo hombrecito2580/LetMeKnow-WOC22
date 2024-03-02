@@ -62,11 +62,11 @@ Before you begin, ensure you have met the following requirements:
 
 6. (Optional) Customize and modify:
 
-Feel free to explore the project code, make modifications, and customize the app according to your requirements.
+- Feel free to explore the project code, make modifications, and customize the app according to your requirements.
 
 ## 🙏 Credits
 
-### Third-party Libraries
+### Third-party Libraries & Services
 
 - Glide: Used for image loading and caching ([GitHub](https://github.com/bumptech/glide))
 - Firebase: Used for authentication, storage, and database functionalities ([Firebase](https://firebase.google.com/))
