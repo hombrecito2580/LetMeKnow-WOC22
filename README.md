@@ -23,26 +23,60 @@ Let Me Know is a polling app where users can create and answer polls among the u
     <img src="https://res.cloudinary.com/dxomldckp/image/upload/v1709322628/let-me-know/xmfnua4u4wwmlz8464bd.jpg" alt="Let Me Know Logo" width="200">
 </div>
 
-## 🛠️ Installation
+## 🛠️ Installation & Usage
 
+### Prerequisites
 
+Before you begin, ensure you have met the following requirements:
 
-## 📝 Usage
+- Android Studio installed on your system
+- Firebase project set up with authentication, storage, and database services
 
+### Installation Steps
 
+1. Clone the repository to your local machine:
 
-## 🤝 Contributing
+   ```bash
+   git clone https://github.com/hombrecito2580/LetMeKnow-WOC22.git
 
+2. Open the project in Android Studio:
 
+- Launch Android Studio.
+- Select "Open an existing Android Studio project" from the welcome screen.
+- Navigate to the directory where you cloned the repository and select the project folder.
+
+3. Configure Firebase services:
+
+- Visit the Firebase Console and create a new project if you haven't already done so.
+- Set up Firebase authentication, storage, and database services for your project following the instructions provided in the Firebase documentation.
+- Download the google-services.json file and place it in the app directory of your Android project.
+
+4. Build and run the project:
+
+- Once the project is open in Android Studio and Firebase services are configured, you can build and run the project on your Android device or emulator.
+- Click on the green play button ("Run app") in the Android Studio toolbar to build and run the project.
+
+5. Test the app:
+
+- After the app is successfully installed on your device or emulator, you can test its functionality, including authentication, storage, and database features.
+
+6. (Optional) Customize and modify:
+
+Feel free to explore the project code, make modifications, and customize the app according to your requirements.
 
 ## 🙏 Credits
 
+### Third-party Libraries
 
+- Glide: Used for image loading and caching ([GitHub](https://github.com/bumptech/glide))
+- Firebase: Used for authentication, storage, and database functionalities ([Firebase](https://firebase.google.com/))
 
 ## 📄 License
 
-
+This project is licensed under the MIT License. See the [license.txt](license.txt) file for details.
 
 ## 📬 Contact
 
+For any questions, feedback, or support related to the Let Me Know app, feel free to reach out:
 
+- **Email:** [hombrecito2580@gmail.com](mailto:hombrecito2580@gmail.com)
