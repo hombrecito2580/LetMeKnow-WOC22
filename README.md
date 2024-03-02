@@ -70,6 +70,7 @@ Before you begin, ensure you have met the following requirements:
 
 - Glide: Used for image loading and caching ([GitHub](https://github.com/bumptech/glide))
 - Firebase: Used for authentication, storage, and database functionalities ([Firebase](https://firebase.google.com/))
+- MPAndroidChart: Used for visualizing data with charts ([GitHub](https://github.com/PhilJay/MPAndroidChart))
 
 ## 📄 License
 
